@@ -3,6 +3,7 @@ Me solution for https://open.kattis.com/problems/2048
 """
 
 from enum import Enum
+import sys
 
 
 class Direction(Enum):
@@ -209,3 +210,8 @@ def __merge_down(matrix):
                 else:
                     new_matrix[y][x] = matrix[y][x]
     return new_matrix, changed
+
+if __name__ == '__main__':
+    first_argument = sys.argv[1]
+    matrix, direction = convert_to_matrix(first_argument)
+    execute(matrix, direction)

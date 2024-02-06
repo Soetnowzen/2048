@@ -121,5 +121,9 @@ Output four lines with four integers each. Two integers in a line must be separa
 ## Version
 Python 3.12
 
+## Run unit tests with
+
+`python -m unittest ./tests/test.py`
+
 ## Footnotes
 Based on 1024 by Veewo Studio and conceptually similar to Threes by Asher Vollmer.
