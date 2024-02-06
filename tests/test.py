@@ -148,5 +148,35 @@ class TestSum(unittest.TestCase):
             ]
         self.assertEqual(actual, expected)
 
+    def test_sample_input_5(self):
+        """
+        input:
+            2 2 4 8
+            4 0 4 4
+            16 16 16 16
+            32 16 16 32
+            0
+        output:
+            4 4 8 0
+            8 4 0 0
+            32 32 0 0
+            32 32 32 0
+        """
+        data = [
+            [2, 2, 4, 8],
+            [4, 0, 4, 4],
+            [16, 16, 16, 16],
+            [32, 16, 16, 32],
+            0
+            ]
+        actual = execute(data)
+        expected = [
+            [4, 4, 8, 0],
+            [8, 4, 0, 0],
+            [32, 32, 0, 0],
+            [32, 32, 32, 0]
+            ]
+        self.assertEqual(actual, expected)
+
 if __name__ == '__main__':
     unittest.main()
