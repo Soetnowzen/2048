@@ -1,13 +1,23 @@
+"""
+Me solution for https://open.kattis.com/problems/2048
+"""
+
 from enum import Enum
 
 
 class Direction(Enum):
+    """
+    Directional enum to convert input to readable value.
+    """
     LEFT = 0
     UP = 1
     RIGHT = 2
     DOWN = 3
 
 def execute(matrix):
+    """
+    Execute movement on matrix
+    """
     if Direction(matrix[-1]) == Direction.LEFT:
         changed = True
         while changed:
@@ -15,7 +25,6 @@ def execute(matrix):
         matrix, changed = __merge_left(matrix)
         while changed:
             matrix, changed = __move_left(matrix)
-        return matrix
     elif Direction(matrix[-1]) == Direction.UP:
         changed = True
         while changed:
@@ -23,7 +32,6 @@ def execute(matrix):
         matrix, changed = __merge_up(matrix)
         while changed:
             matrix, changed = __move_up(matrix)
-        return matrix
     elif Direction(matrix[-1]) == Direction.RIGHT:
         changed = True
         while changed:
@@ -31,7 +39,6 @@ def execute(matrix):
         matrix, changed = __merge_right(matrix)
         while changed:
             matrix, changed = __move_right(matrix)
-        return matrix
     elif Direction(matrix[-1]) == Direction.DOWN:
         changed = True
         while changed:
@@ -39,8 +46,10 @@ def execute(matrix):
         matrix, changed = __merge_down(matrix)
         while changed:
             matrix, changed = __move_down(matrix)
-        return matrix
-    return None
+    else:
+        # Errounious direction given.
+        matrix = None
+    return matrix
 
 def __move_left(matrix):
     new_matrix = [[0]*4, [0]*4, [0]*4, [0]*4]
@@ -49,7 +58,6 @@ def __move_left(matrix):
         for x in range(len(matrix[y])):
             if x == 0 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
                 previous = matrix[y][x-1]
                 if previous == 0:
@@ -69,7 +77,6 @@ def __merge_left(matrix):
         for x in range(len(matrix[y])):
             if x == 0 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
                 previous = matrix[y][x-1]
                 if previous == matrix[y][x]:
@@ -89,7 +96,6 @@ def __move_up(matrix):
         for x in range(len(matrix[y])):
             if y == 0 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
                 previous = matrix[y-1][x]
                 if previous == 0:
@@ -107,7 +113,6 @@ def __merge_up(matrix):
         for x in range(len(matrix[y])):
             if y == 0 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
                 previous = matrix[y-1][x]
                 if previous == matrix[y][x]:
@@ -125,10 +130,9 @@ def __move_right(matrix):
         for x in range(len(matrix[y])):
             if x >= 3 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
-                next = matrix[y][x+1]
-                if next == 0:
+                post = matrix[y][x+1]
+                if post == 0:
                     new_matrix[y][x+1] = matrix[y][x]
                     new_matrix[y][x] = 0
                     matrix[y][x+1] = matrix[y][x]
@@ -145,13 +149,12 @@ def __merge_right(matrix):
         for x in reversed(range(len(matrix[y]))):
             if x >= 3 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
-                next = matrix[y][x+1]
-                if next == matrix[y][x]:
-                    new_matrix[y][x+1] = next + matrix[y][x]
+                post = matrix[y][x+1]
+                if post == matrix[y][x]:
+                    new_matrix[y][x+1] = post + matrix[y][x]
                     new_matrix[y][x] = 0
-                    matrix[y][x+1] = next + matrix[y][x]
+                    matrix[y][x+1] = post + matrix[y][x]
                     matrix[y][x] = 0
                     changed = True
                 else:
@@ -165,10 +168,9 @@ def __move_down(matrix):
         for x in range(len(matrix[y])):
             if y >= 3 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
-                next = matrix[y+1][x]
-                if next == 0:
+                post = matrix[y+1][x]
+                if post == 0:
                     new_matrix[y+1][x] = matrix[y][x]
                     new_matrix[y][x] = 0
                     matrix[y+1][x] = matrix[y][x]
@@ -185,7 +187,6 @@ def __merge_down(matrix):
         for x in range(len(matrix[y])):
             if y >= 3 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
-                pass
             else:
                 previous = matrix[y-1][x]
                 if previous == matrix[y][x]:
