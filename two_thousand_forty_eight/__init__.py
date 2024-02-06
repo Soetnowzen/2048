@@ -14,32 +14,45 @@ class Direction(Enum):
     RIGHT = 2
     DOWN = 3
 
-def execute(matrix):
+def convert_to_matrix(data):
+    """
+    converts string to datatype matrix and direction.
+    """
+    matrix = []
+    for i, row in enumerate(data.split('\n')):
+        matrix.append([])
+        for cell in row.strip().split():
+            matrix[i].append(int(cell))
+    direction = Direction(int(matrix[4][0]))
+    matrix = matrix[0:4]
+    return matrix, direction
+
+def execute(matrix, direction):
     """
     Execute movement on matrix
     """
-    if Direction(matrix[-1]) == Direction.LEFT:
+    if direction == Direction.LEFT:
         changed = True
         while changed:
             matrix, changed = __move_left(matrix)
         matrix, changed = __merge_left(matrix)
         while changed:
             matrix, changed = __move_left(matrix)
-    elif Direction(matrix[-1]) == Direction.UP:
+    elif direction == Direction.UP:
         changed = True
         while changed:
             matrix, changed = __move_up(matrix)
         matrix, changed = __merge_up(matrix)
         while changed:
             matrix, changed = __move_up(matrix)
-    elif Direction(matrix[-1]) == Direction.RIGHT:
+    elif direction == Direction.RIGHT:
         changed = True
         while changed:
             matrix, changed = __move_right(matrix)
         matrix, changed = __merge_right(matrix)
         while changed:
             matrix, changed = __move_right(matrix)
-    elif Direction(matrix[-1]) == Direction.DOWN:
+    elif direction == Direction.DOWN:
         changed = True
         while changed:
             matrix, changed = __move_down(matrix)
@@ -55,19 +68,19 @@ def __move_left(matrix):
     new_matrix = [[0]*4, [0]*4, [0]*4, [0]*4]
     changed = False
     for y in range(len(matrix[0:4])):
-        for x in range(len(matrix[y])):
+        for x, cell in enumerate(matrix[y]):
             if x == 0 or matrix[y][x] == 0:
-                new_matrix[y][x] = matrix[y][x]
+                new_matrix[y][x] = cell
             else:
                 previous = matrix[y][x-1]
                 if previous == 0:
-                    new_matrix[y][x-1] = matrix[y][x]
+                    new_matrix[y][x-1] = cell
                     new_matrix[y][x] = 0
-                    matrix[y][x-1] = matrix[y][x]
+                    matrix[y][x-1] = cell
                     matrix[y][x] = 0
                     changed = True
                 else:
-                    new_matrix[y][x] = matrix[y][x]
+                    new_matrix[y][x] = cell
     return new_matrix, changed
 
 def __merge_left(matrix):

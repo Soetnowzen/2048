@@ -3,7 +3,7 @@ My unit tests for 2048 problem
 """
 
 import unittest
-from two_thousand_forty_eight import execute
+from two_thousand_forty_eight import execute, convert_to_matrix, Direction
 
 
 class Test2048(unittest.TestCase):
@@ -24,12 +24,20 @@ class Test2048(unittest.TestCase):
             2 64 32 4
             2048 64 0 0
         """
-        data = [[2, 0, 0, 2],
+        data = """2 0 0 2
+            4 16 8 2
+            2 64 32 4
+            1024 1024 64 0
+            0
+            """
+        matrix, direction = convert_to_matrix(data)
+        expected = [[2, 0, 0, 2],
                 [4, 16, 8, 2],
                 [2, 64, 32, 4],
-                [1024, 1024, 64, 0],
-                0]
-        actual = execute(data)
+                [1024, 1024, 64, 0]]
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(0))
+        actual = execute(matrix, direction)
         expected = [[4, 0, 0, 0],
                     [4, 16, 8, 2],
                     [2, 64, 32, 4],
@@ -50,12 +58,19 @@ class Test2048(unittest.TestCase):
             2 1024 64 0
             1024 0 0 0
         """
-        data = [[2, 0, 0, 2],
+        data = """2 0 0 2
+            4 16 8 2
+            2 64 32 4
+            1024 1024 64 0
+            1"""
+        matrix, direction = convert_to_matrix(data)
+        expected = [[2, 0, 0, 2],
                 [4, 16, 8, 2],
                 [2, 64, 32, 4],
-                [1024, 1024, 64, 0],
-                1]
-        actual = execute(data)
+                [1024, 1024, 64, 0]]
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(1))
+        actual = execute(matrix, direction)
         expected = [[2, 16, 8, 4],
                     [4, 64, 32, 4],
                     [2, 1024, 64, 0],
@@ -76,12 +91,19 @@ class Test2048(unittest.TestCase):
             2 64 32 4
             0 0 2048 64
         """
-        data = [[2, 0, 0, 2],
+        data = """2 0 0 2
+            4 16 8 2
+            2 64 32 4
+            1024 1024 64 0
+            2"""
+        matrix, direction = convert_to_matrix(data)
+        expected = [[2, 0, 0, 2],
                 [4, 16, 8, 2],
                 [2, 64, 32, 4],
-                [1024, 1024, 64, 0],
-                2]
-        actual = execute(data)
+                [1024, 1024, 64, 0]]
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(2))
+        actual = execute(matrix, direction)
         expected = [[0, 0, 0, 4],
                     [4, 16, 8, 2],
                     [2, 64, 32, 4],
@@ -102,12 +124,19 @@ class Test2048(unittest.TestCase):
             2 64 32 4
             0 0 2048 64
         """
-        data = [[2, 0, 0, 2],
+        data = """2 0 0 2
+            4 16 8 2
+            2 64 32 4
+            1024 1024 64 0
+            3"""
+        matrix, direction = convert_to_matrix(data)
+        expected = [[2, 0, 0, 2],
                 [4, 16, 8, 2],
                 [2, 64, 32, 4],
-                [1024, 1024, 64, 0],
-                3]
-        actual = execute(data)
+                [1024, 1024, 64, 0]]
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(3))
+        actual = execute(matrix, direction)
         expected = [
             [2, 0, 0, 0],
             [4, 16, 8, 0],
@@ -130,14 +159,21 @@ class Test2048(unittest.TestCase):
             32 32 0 0
             32 32 32 0
         """
-        data = [
+        data = """2 2 4 8
+            4 0 4 4
+            16 16 16 16
+            32 16 16 32
+            0"""
+        matrix, direction = convert_to_matrix(data)
+        expected = [
             [2, 2, 4, 8],
             [4, 0, 4, 4],
             [16, 16, 16, 16],
-            [32, 16, 16, 32],
-            0
+            [32, 16, 16, 32]
             ]
-        actual = execute(data)
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(0))
+        actual = execute(matrix, direction)
         expected = [
             [4, 4, 8, 0],
             [8, 4, 0, 0],
@@ -160,14 +196,21 @@ class Test2048(unittest.TestCase):
             0 0 32 32
             0 32 32 32
         """
-        data = [
+        data = """2 2 4 8
+            4 0 4 4
+            16 16 16 16
+            32 16 16 32
+            2"""
+        matrix, direction = convert_to_matrix(data)
+        expected = [
             [2, 2, 4, 8],
             [4, 0, 4, 4],
             [16, 16, 16, 16],
-            [32, 16, 16, 32],
-            2
+            [32, 16, 16, 32]
             ]
-        actual = execute(data)
+        self.assertEqual(matrix, expected)
+        self.assertEqual(direction, Direction(2))
+        actual = execute(matrix, direction)
         expected = [
             [0, 4, 4, 8],
             [0, 0, 4, 8],
