@@ -141,8 +141,8 @@ def __move_right(matrix):
 def __merge_right(matrix):
     new_matrix = [[0]*4, [0]*4, [0]*4, [0]*4]
     changed = False
-    for y in range(len(matrix[0:4])):
-        for x in range(len(matrix[y])):
+    for y in reversed(range(len(matrix[0:4]))):
+        for x in reversed(range(len(matrix[y]))):
             if x >= 3 or matrix[y][x] == 0:
                 new_matrix[y][x] = matrix[y][x]
                 pass
