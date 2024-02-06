@@ -68,5 +68,31 @@ class TestSum(unittest.TestCase):
                     [2048, 64, 0, 0]]
         self.assertEqual(actual, expected)
 
+    def test_sample_input_2(self):
+        """
+        input:
+            2 0 0 2
+            4 16 8 2
+            2 64 32 4
+            1024 1024 64 0
+            1
+        output:
+            2 16 8 4
+            4 64 32 4
+            2 1024 64 0
+            1024 0 0 0
+        """
+        data = [[2, 0, 0, 2],
+                [4, 16, 8, 2],
+                [2, 64, 32, 4],
+                [1024, 1024, 64, 0],
+                1]
+        actual = execute(data)
+        expected = [[2, 16, 8, 4],
+                    [4, 64, 32, 4],
+                    [2, 1024, 64, 0],
+                    [1024, 0, 0, 0]]
+        self.assertEqual(actual, expected)
+
 if __name__ == '__main__':
     unittest.main()
