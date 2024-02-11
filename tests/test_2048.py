@@ -12,7 +12,8 @@ class Test2048(unittest.TestCase):
     """
     Six simple examples transformed to unittests.
     """
-    def test_sample_input_1(self):
+
+    def test_left(self):
         """
         input:
             2 0 0 2
@@ -33,20 +34,20 @@ class Test2048(unittest.TestCase):
             0
             """
         matrix, direction = convert_to_matrix(data)
-        expected = [[2, 0, 0, 2],
-                [4, 16, 8, 2],
-                [2, 64, 32, 4],
-                [1024, 1024, 64, 0]]
+        expected = [2, 0, 0, 2,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    1024, 1024, 64, 0]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(0))
         actual = execute(matrix, direction)
-        expected = [[4, 0, 0, 0],
-                    [4, 16, 8, 2],
-                    [2, 64, 32, 4],
-                    [2048, 64, 0, 0]]
+        expected = [4, 0, 0, 0,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    2048, 64, 0, 0]
         self.assertEqual(actual, expected)
 
-    def test_sample_input_2(self):
+    def test_up(self):
         """
         input:
             2 0 0 2
@@ -66,20 +67,20 @@ class Test2048(unittest.TestCase):
             1024 1024 64 0
             1"""
         matrix, direction = convert_to_matrix(data)
-        expected = [[2, 0, 0, 2],
-                [4, 16, 8, 2],
-                [2, 64, 32, 4],
-                [1024, 1024, 64, 0]]
+        expected = [2, 0, 0, 2,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    1024, 1024, 64, 0]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(1))
         actual = execute(matrix, direction)
-        expected = [[2, 16, 8, 4],
-                    [4, 64, 32, 4],
-                    [2, 1024, 64, 0],
-                    [1024, 0, 0, 0]]
+        expected = [2, 16, 8, 4,
+                    4, 64, 32, 4,
+                    2, 1024, 64, 0,
+                    1024, 0, 0, 0]
         self.assertEqual(actual, expected)
 
-    def test_sample_input_3(self):
+    def test_right(self):
         """
         input:
             2 0 0 2
@@ -99,20 +100,20 @@ class Test2048(unittest.TestCase):
             1024 1024 64 0
             2"""
         matrix, direction = convert_to_matrix(data)
-        expected = [[2, 0, 0, 2],
-                [4, 16, 8, 2],
-                [2, 64, 32, 4],
-                [1024, 1024, 64, 0]]
+        expected = [2, 0, 0, 2,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    1024, 1024, 64, 0]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(2))
         actual = execute(matrix, direction)
-        expected = [[0, 0, 0, 4],
-                    [4, 16, 8, 2],
-                    [2, 64, 32, 4],
-                    [0, 0, 2048, 64]]
+        expected = [0, 0, 0, 4,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    0, 0, 2048, 64]
         self.assertEqual(actual, expected)
 
-    def test_sample_input_4(self):
+    def test_down(self):
         """
         input:
             2 0 0 2
@@ -132,22 +133,22 @@ class Test2048(unittest.TestCase):
             1024 1024 64 0
             3"""
         matrix, direction = convert_to_matrix(data)
-        expected = [[2, 0, 0, 2],
-                [4, 16, 8, 2],
-                [2, 64, 32, 4],
-                [1024, 1024, 64, 0]]
+        expected = [2, 0, 0, 2,
+                    4, 16, 8, 2,
+                    2, 64, 32, 4,
+                    1024, 1024, 64, 0]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(3))
         actual = execute(matrix, direction)
         expected = [
-            [2, 0, 0, 0],
-            [4, 16, 8, 0],
-            [2, 64, 32, 4],
-            [1024, 1024, 64, 4]
-            ]
+            2, 0, 0, 0,
+            4, 16, 8, 0,
+            2, 64, 32, 4,
+            1024, 1024, 64, 4
+        ]
         self.assertEqual(actual, expected)
 
-    def test_sample_input_5(self):
+    def test_left_one_merge(self):
         """
         input:
             2 2 4 8
@@ -167,24 +168,20 @@ class Test2048(unittest.TestCase):
             32 16 16 32
             0"""
         matrix, direction = convert_to_matrix(data)
-        expected = [
-            [2, 2, 4, 8],
-            [4, 0, 4, 4],
-            [16, 16, 16, 16],
-            [32, 16, 16, 32]
-            ]
+        expected = [2, 2, 4, 8,
+                    4, 0, 4, 4,
+                    16, 16, 16, 16,
+                    32, 16, 16, 32]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(0))
         actual = execute(matrix, direction)
-        expected = [
-            [4, 4, 8, 0],
-            [8, 4, 0, 0],
-            [32, 32, 0, 0],
-            [32, 32, 32, 0]
-            ]
+        expected = [4, 4, 8, 0,
+                    8, 4, 0, 0,
+                    32, 32, 0, 0,
+                    32, 32, 32, 0]
         self.assertEqual(actual, expected)
 
-    def test_sample_input_6(self):
+    def test_right_one_merge(self):
         """
         input:
             2 2 4 8
@@ -204,22 +201,19 @@ class Test2048(unittest.TestCase):
             32 16 16 32
             2"""
         matrix, direction = convert_to_matrix(data)
-        expected = [
-            [2, 2, 4, 8],
-            [4, 0, 4, 4],
-            [16, 16, 16, 16],
-            [32, 16, 16, 32]
-            ]
+        expected = [2, 2, 4, 8,
+                    4, 0, 4, 4,
+                    16, 16, 16, 16,
+                    32, 16, 16, 32]
         self.assertEqual(matrix, expected)
         self.assertEqual(direction, Direction(2))
         actual = execute(matrix, direction)
-        expected = [
-            [0, 4, 4, 8],
-            [0, 0, 4, 8],
-            [0, 0, 32, 32],
-            [0, 32, 32, 32]
-            ]
+        expected = [0, 4, 4, 8,
+                    0, 0, 4, 8,
+                    0, 0, 32, 32,
+                    0, 32, 32, 32]
         self.assertEqual(actual, expected)
+
 
 if __name__ == '__main__':
     unittest.main()

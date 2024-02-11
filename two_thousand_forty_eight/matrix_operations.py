@@ -1,4 +1,3 @@
-# matrix_operations.py
 from .direction import Direction
 
 
@@ -14,9 +13,8 @@ def convert_to_matrix(data):
     """
     matrix = []
     for i, row in enumerate(data.split('\n')):
-        matrix.append([])
         for cell in row.strip().split():
-            matrix[i].append(int(cell))
-    direction = Direction(int(matrix[4][0]))
-    matrix = matrix[0:4]
+            matrix.append(int(cell))
+    direction = Direction(int(matrix[16]))
+    matrix = matrix[0:16]
     return matrix, direction
