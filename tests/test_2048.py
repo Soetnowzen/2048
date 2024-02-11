@@ -3,7 +3,9 @@ My unit tests for 2048 problem
 """
 
 import unittest
-from two_thousand_forty_eight import execute, convert_to_matrix, Direction
+from two_thousand_forty_eight.direction import Direction
+from two_thousand_forty_eight.game_logic import execute
+from two_thousand_forty_eight.matrix_operations import convert_to_matrix
 
 
 class Test2048(unittest.TestCase):
