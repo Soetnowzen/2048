@@ -26,6 +26,16 @@ def execute(matrix: list, direction: Direction) -> list:
 
 
 def __move__(matrix: list, direction: Direction) -> tuple:
+    """
+    Moves all the tiles in the 2D representation in the given direction.
+
+    Args:
+        matrix (list): 2D list representing the game board.
+        direction (Direction): Direction of movement (LEFT, UP, RIGHT, DOWN).
+
+    Returns:
+        tuple: If something has been moved, and the updated matrix.
+    """
     if len(matrix) > 16:
         raise ValueError("Invalid Matrix size:", len(matrix))
     new_matrix = [0] * 4 * 4
@@ -49,6 +59,17 @@ def __move__(matrix: list, direction: Direction) -> tuple:
 
 
 def __get_compare_position__(direction: Direction, x: int, y: int) -> int:
+    """
+    Gets the compare_position based on the direction.
+
+    Args:
+        direction (Direction): Direction of movement (LEFT, UP, RIGHT, DOWN).
+        x (int): The x axis position of a matrix.
+        y (int); The y axis position of a matrix.
+    Returns:
+        int: Either a value between 0 to 16 if successful.
+            Or -1 if a errnouious movement.
+    """
     if direction == Direction.LEFT and x != 0:
         return (x - 1) + 4 * y
     elif direction == Direction.DOWN and y != 3:
@@ -61,6 +82,15 @@ def __get_compare_position__(direction: Direction, x: int, y: int) -> int:
 
 
 def __merge__(matrix: list, direction: Direction) -> tuple:
+    """
+    Merges two elements in the given direction if that are equal.
+
+    Args:
+        matrix (list): 2D list representing the game board
+        direction (Direction): Direction of movement (LEFT, UP, RIGHT, DOWN).
+    Returns:
+        tuple: If something has been merged, and the updated matrix.
+    """
     if len(matrix) != 16:
         raise ValueError("Invalid Matrix size:", len(matrix))
     new_matrix = [0] * 4 * 4
@@ -74,18 +104,31 @@ def __merge__(matrix: list, direction: Direction) -> tuple:
             else:
                 if matrix[compare_position] == matrix[current_position]:
                     if direction in {Direction.DOWN, Direction.RIGHT}:
-                        new_matrix[current_position] = matrix[compare_position] + \
-                            matrix[current_position]
-                        new_matrix[compare_position] = 0
-                        matrix[current_position] += matrix[compare_position]
-                        matrix[compare_position] = 0
+                        __merge_cell__(new_matrix, matrix,
+                                       current_position, compare_position)
                     else:
-                        new_matrix[compare_position] = matrix[compare_position] + \
-                            matrix[current_position]
-                        new_matrix[current_position] = 0
-                        matrix[compare_position] += matrix[current_position]
-                        matrix[current_position] = 0
+                        __merge_cell__(new_matrix, matrix,
+                                       compare_position, current_position)
                     changed = True
                 else:
                     new_matrix[current_position] = matrix[current_position]
     return new_matrix, changed
+
+
+def __merge_cell__(new_matrix: list, matrix: list, this: int, that: int) -> None:
+    """
+    Merges cell that element into this element.
+
+    Args:
+        new_matrix (list): A updated matrix
+        matrix (list): 2D list representing the game board
+        this (int): Index of the element.
+        that (int): Index of the element.
+
+    Returns:
+        Nothing
+    """
+    new_matrix[this] = matrix[that] + matrix[this]
+    new_matrix[that] = 0
+    matrix[this] += matrix[that]
+    matrix[that] = 0
